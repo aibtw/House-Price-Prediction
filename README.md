@@ -1,4 +1,4 @@
-#Gradient Descent Implementation
+# Gradient Descent Implementation
 __________________________________________
 
 This project implements the gradient descent algorithm for machine learning (Linear Regression), as a part of 
