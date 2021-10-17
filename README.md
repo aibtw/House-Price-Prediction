@@ -46,6 +46,6 @@ __________________________________________
 **For validation, there are no output files. The results are printed in command line directly**
 
 These results are simply an overview of predicton (first and last 3 predicted prices to be compared with those in test.csv),
-in addition to the lost. These are shown for all the 3 trained models.
+in addition to the loss. These are shown for all the 3 trained models.
 
 

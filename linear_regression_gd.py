@@ -21,7 +21,7 @@ def train(n):
     s_factor = np.amax(x, axis=1)
     x = x / s_factor[:, None]
     # --------------------- Learning rate -------------------- #
-    lr = 0.005
+    lr = 0.001
     # -------------------- Initialize loss ------------------- #
     loss = list()
     num_of_examples = x.shape[1]
@@ -65,7 +65,7 @@ def train(n):
         """Calculate loss"""
         loss.append(float(np.sum((hyp - trainY) ** 2) / num_of_examples))
         relative_loss = abs((loss[i] - loss[i - 1]) / loss[i] * 100)
-        if relative_loss <= 0.0001 and i != 0:
+        if relative_loss <= 0.001 and i != 0:
             print("Stopped at iteration: " + str(i))
             break
 
@@ -85,12 +85,12 @@ def test():
     A function that test a model that predicts house prices, based on provided test data set (test.csv)
     :return:
     """
-    # ---------------------- Reading General input ---------------------- #
+    # ----------------- Reading General Input ---------------- #
     x = np.transpose(np.genfromtxt("test.csv", delimiter=',', skip_header=1,
                                    usecols=(1, 4, 17, 18, 19, 43, 44, 46, 62, 77),  # use only the specified columns
                                    filling_values=0))
     y = np.loadtxt("test.csv", delimiter=',', skiprows=1, usecols=-1)
-    # ---------------------- Feature Scaling ---------------------- #
+    # ------------------- Feature Scaling -------------------- #
     s_factor = np.amax(x, axis=1)
     x = x / s_factor[:, None]
     (x_m, x_n) = x.shape
@@ -99,7 +99,8 @@ def test():
     print(x)
     print(y)
 
-    # ====================== Test Linear ======================== #
+    losses = {"Linear": 0, "Polynomial of Degree2": 0, "Polynomial of Degree3": 0}
+    # ---------------------- Linear Test ---------------------- #
     print("\n\n#==================== Linear Testing ====================#")
     train_thetas = np.load("linear_thetas.npy")
 
@@ -109,37 +110,45 @@ def test():
     print("Hypothesis Overview:")
     print(hyp)
     test_loss = np.sum((hyp - testY) ** 2) / x_n
-    test_acc = np.sum(abs(hyp - testY)) / x_n
+    losses["Linear"] = test_loss
     print("Linear Test Loss is: " + str(test_loss))
-    # ====================== Test Linear Done ======================== #
+    # ------------------- Test Linear Done ------------------- #
 
-    # ==================== Test 2nd degree ======================== #
+    # -------------------- 2nd Degree Test ------------------- #
     print("\n\n#==================== 2nd degree Testing ====================#")
-    # ---------------------- Reading input ---------------------- #
+    # -------------------- Reading input --------------------- #
     train_thetas = np.load("Polynomial_Deg2_thetas.npy")
-    # ---------------------- update variables ---------------------- #
+    # ------------------- update variables ------------------- #
     testX = np.vstack([testX, np.square(x)])
     hyp = np.dot(train_thetas, testX)
     print("Hypothesis Overview:")
     print(hyp)
     test_loss = np.sum((hyp - testY) ** 2) / x_n
-    test_acc = np.sum(abs(hyp - testY)) / x_n
+    losses["Polynomial of Degree2"] = test_loss
     print("Polynomial 2nd degree Test Loss is: " + str(test_loss))
-    # ==================== Test 2nd degree done ======================== #
+    # ----------------- 2nd Degree Test Done ----------------- #
 
-    # ==================== Test 3rd degree ======================== #
+    # -------------------- 3rd Degree Test ------------------- #
     print("\n\n#==================== 3rd degree Testing ====================#")
-    # ---------------------- Reading input ---------------------- #
+    # -------------------- Reading input --------------------- #
     train_thetas = np.load("Polynomial_Deg3_thetas.npy")
-    # ---------------------- update variables ---------------------- #
+    # ------------------- update variables ------------------- #
     testX = np.vstack([testX, np.power(x, 3)])
     hyp = np.dot(train_thetas, testX)
     print("Hypothesis Overview:")
     print(hyp)
     test_loss = np.sum((hyp - testY) ** 2) / x_n
-    test_acc = np.sum(abs(hyp - testY)) / x_n
-    print("Polynomial 3nd degree Loss is: " + str(test_loss))
-    # ==================== Test 3rd degree done ======================== #
+    losses["Polynomial of Degree3"] = test_loss
+    print("Polynomial 3rd degree Loss is: " + str(test_loss))
+    # ----------------- 3rd Degree Test Done ----------------- #
+
+    # Show which model was the best
+    best_loss = min(zip(losses.values(), losses.keys()))[1]
+    print("\n----------------------------------------------------------------------------------------"
+          "\nThe best model in terms of loss is: {model} model, "
+          "with loss equal to {loss}"
+          "\n----------------------------------------------------------------------------------------"
+          "\n\n".format(model=best_loss, loss=losses[best_loss]))
 
 
 if __name__ == "__main__":
