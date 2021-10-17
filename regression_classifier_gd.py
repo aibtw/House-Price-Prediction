@@ -9,7 +9,7 @@ def train(n):
     A function that trains a model to predict house prices based on provided train data (train.csv).
     Only certain feature are used, which are in columns 1, 4, 17, 18, 19, 43, 44, 46, 62, 77 (count starts at 0)
 
-    :param n: polynomial degree, where 1 means linear, 2 means 2nd degree, 3 means 3rd degree.
+    :param n: polynomial order, where 1 means linear, 2 means 2nd order, 3 means 3rd order.
     """
     # ----------------- default output files ----------------- #
     output_file = "Linear_Train_Results.txt"
@@ -42,12 +42,12 @@ def train(n):
         pass
     elif n == 2:  # power 2
         trainX = np.vstack([trainX, np.square(x)])
-        output_file = "Polynomial_Deg2_Train_Results.txt"
-        output_thetas = "Polynomial_Deg2_thetas"
+        output_file = "Polynomial_order2_Train_Results.txt"
+        output_thetas = "Polynomial_order2_thetas"
     elif n == 3:  # power 3
         trainX = np.vstack([trainX, np.square(x), np.power(x, 3)])
-        output_file = "Polynomial_Deg3_Train_Results.txt"
-        output_thetas = "Polynomial_Deg3_thetas"
+        output_file = "Polynomial_order3_Train_Results.txt"
+        output_thetas = "Polynomial_order3_thetas"
     num_of_features = trainX.shape[0]
 
     # ------------ Thetas random start point ------------ #
@@ -99,7 +99,7 @@ def test():
     print(x)
     print(y)
 
-    losses = {"Linear": 0, "Polynomial of Degree2": 0, "Polynomial of Degree3": 0}
+    losses = {"Linear": 0, "Polynomial of order2": 0, "Polynomial of order3": 0}
     # ---------------------- Linear Test ---------------------- #
     print("\n\n#==================== Linear Testing ====================#")
     train_thetas = np.load("linear_thetas.npy")
@@ -114,33 +114,33 @@ def test():
     print("Linear Test Loss is: " + str(test_loss))
     # ------------------- Test Linear Done ------------------- #
 
-    # -------------------- 2nd Degree Test ------------------- #
-    print("\n\n#==================== 2nd degree Testing ====================#")
+    # -------------------- 2nd order Test ------------------- #
+    print("\n\n#==================== 2nd order Testing ====================#")
     # -------------------- Reading input --------------------- #
-    train_thetas = np.load("Polynomial_Deg2_thetas.npy")
+    train_thetas = np.load("Polynomial_order2_thetas.npy")
     # ------------------- update variables ------------------- #
     testX = np.vstack([testX, np.square(x)])
     hyp = np.dot(train_thetas, testX)
     print("Hypothesis Overview:")
     print(hyp)
     test_loss = np.sum((hyp - testY) ** 2) / x_n
-    losses["Polynomial of Degree2"] = test_loss
-    print("Polynomial 2nd degree Test Loss is: " + str(test_loss))
-    # ----------------- 2nd Degree Test Done ----------------- #
+    losses["Polynomial of order2"] = test_loss
+    print("Polynomial 2nd order Test Loss is: " + str(test_loss))
+    # ----------------- 2nd order Test Done ----------------- #
 
-    # -------------------- 3rd Degree Test ------------------- #
-    print("\n\n#==================== 3rd degree Testing ====================#")
+    # -------------------- 3rd order Test ------------------- #
+    print("\n\n#==================== 3rd order Testing ====================#")
     # -------------------- Reading input --------------------- #
-    train_thetas = np.load("Polynomial_Deg3_thetas.npy")
+    train_thetas = np.load("Polynomial_order3_thetas.npy")
     # ------------------- update variables ------------------- #
     testX = np.vstack([testX, np.power(x, 3)])
     hyp = np.dot(train_thetas, testX)
     print("Hypothesis Overview:")
     print(hyp)
     test_loss = np.sum((hyp - testY) ** 2) / x_n
-    losses["Polynomial of Degree3"] = test_loss
-    print("Polynomial 3rd degree Loss is: " + str(test_loss))
-    # ----------------- 3rd Degree Test Done ----------------- #
+    losses["Polynomial of order3"] = test_loss
+    print("Polynomial 3rd order Loss is: " + str(test_loss))
+    # ----------------- 3rd order Test Done ----------------- #
 
     # Show which model was the best
     best_loss = min(zip(losses.values(), losses.keys()))[1]
@@ -156,8 +156,8 @@ if __name__ == "__main__":
         print("not enough arguments.\n"
               "Use the following arguments in command line:\n"
               "\tT1: Train a linear model\n"
-              "\tT2: Train a polynomial model of degree 2\n"
-              "\tT3: Train a polynomial model of degree 3\n"
+              "\tT2: Train a polynomial model of order 2\n"
+              "\tT3: Train a polynomial model of order 3\n"
               "\tV: validate(test) the trained models")
         exit()
 

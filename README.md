@@ -1,7 +1,7 @@
 # Gradient Descent Implementation
 __________________________________________
 
-This project implements the gradient descent algorithm for machine learning (Linear Regression), as a part of 
+This project implements the gradient descent algorithm for machine learning (Regression Classifier), as a part of 
 **Introduction to Artificial Intelligence** course at **KAU**. The goal is to train the model to predict
 houses price based on a provided dataset. Only a part of the dataset is going to be used. Specifically, 
 only the following features are taken into account:  
@@ -21,10 +21,10 @@ j. YrSold**
 __________________________________________
 To run the program, use the following commands:\
 <pre>
-python linear_regression_gd.py T1 :     Train a linear model
-python linear_regression_gd.py T2 :     Train a polynomial model of degree 2
-python linear_regression_gd.py T3 :     Train a polynomial model of degree 3
-python linear_regression_gd.py V :      validate(test) the trained models
+python regression_classifier_gd.py T1 :     Train a linear model
+python regression_classifier_gd.py T2 :     Train a polynomial model of order 2
+python regression_classifier_gd.py T3 :     Train a polynomial model of order 3
+python regression_classifier_gd.py V :      validate(test) the trained models
 </pre>
 
 ## Output files
@@ -32,10 +32,10 @@ __________________________________________
 **For training, there are 6 output files**
 * *linear_thetas.npy*
 * *Linear_Train_Results.txt*
-* *Polynomial_Deg2_thetas.npy*
-* *Polynomial_Deg2_Train_Results*
-* *Polynomial_Deg3_thetas*
-* *Polynomial_Deg3_Train_Results*
+* *Polynomial_order2_thetas.npy*
+* *Polynomial_order2_Train_Results*
+* *Polynomial_order3_thetas*
+* *Polynomial_order3_Train_Results*
 
 **2 files for each model:**
 <pre>
