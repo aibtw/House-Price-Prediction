@@ -39,8 +39,8 @@ __________________________________________
 
 **2 files for each model:**
 <pre>
-.npy files: these contain the values of (thetas) that the validation program reads.
-.txt files: these show the loss value and thetas values for the last run.
+.npy files: these contain the values of (thetas). this is for the validation program to read, and not for user.
+.txt files: these show the loss value and thetas values for the last run for the user.
 </pre>
 
 **For validation, there are no output files. The results are printed in command line directly**
